@@ -21,6 +21,11 @@ python -m src.web                # chat with the agent (web UI, http://127.0.0.1
 python -m pytest tests           # test tools (no LLM needed)
 ```
 
+> **Windows note:** `agent.py` logs each tool call with an emoji (🔧). If your console
+> codepage isn't UTF-8 (default on Korean Windows: cp949), `python -m src.web` crashes
+> with `UnicodeEncodeError` on the first tool call. Fix by setting UTF-8 I/O before
+> running: `set PYTHONUTF8=1` (cmd) or `$env:PYTHONUTF8=1` (PowerShell).
+
 ## How to work on this project (vibe coding)
 1. Open `docs/04_tasks.md` and pick the next unchecked task.
 2. Ask your AI coding assistant:
