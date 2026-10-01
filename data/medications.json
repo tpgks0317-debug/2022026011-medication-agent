@@ -1,8 +1,8 @@
 {
-  "혈압약":      {"dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후 30분, 물과 함께"},
-  "당뇨약":      {"dose_per_time": 1, "times": ["아침", "점심", "저녁"], "instructions": "식사 직전"},
-  "콜레스테롤약": {"dose_per_time": 1, "times": ["저녁"], "instructions": "자기 전"},
-  "관절염약":    {"dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후, 속이 쓰리면 우유와 함께"},
-  "비타민D":     {"dose_per_time": 1, "times": ["아침"], "instructions": "아침 식사 후"},
-  "수면보조제":  {"dose_per_time": 1, "times": ["저녁"], "instructions": "잠자리 들기 30분 전"}
+  "혈압약":      {"condition": "고혈압",   "dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후 30분, 물과 함께", "duration_days": 30, "price": 150},
+  "당뇨약":      {"condition": "당뇨병",   "dose_per_time": 1, "times": ["아침", "점심", "저녁"], "instructions": "식사 직전", "duration_days": 30, "price": 120},
+  "콜레스테롤약": {"condition": "고지혈증", "dose_per_time": 1, "times": ["저녁"], "instructions": "자기 전", "duration_days": 30, "price": 300},
+  "관절염약":    {"condition": "골관절염", "dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후, 속이 쓰리면 우유와 함께", "duration_days": 14, "price": 250},
+  "비타민D":     {"condition": "골다공증", "dose_per_time": 1, "times": ["아침"], "instructions": "아침 식사 후", "duration_days": 60, "price": 100},
+  "수면보조제":  {"condition": "불면증",   "dose_per_time": 1, "times": ["저녁"], "instructions": "잠자리 들기 30분 전", "duration_days": 14, "price": 400}
 }

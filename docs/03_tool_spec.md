@@ -18,12 +18,36 @@ Write the spec BEFORE implementing a tool. The "Purpose" line becomes the tool d
 
 ## Tool: get_medications
 - File: src/tools/medication_tools.py
-- Purpose: Get all medications with dosage, time slots, and instructions.
+- Purpose: Get all medications with their condition, dosage, time slots, prescription duration, price, and instructions.
 - Type: read
-- Parameters: time_slot (string, optional) — filter by "아침", "점심", or "저녁"
-- Returns: `{"items": [{"name": "혈압약", "dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후 30분"}]}`
-- Errors: unknown time_slot → `{"error": "Unknown time_slot '밤'. Valid: 아침, 점심, 저녁."}`
+- Parameters: time_slot (string, optional) — filter by "아침", "점심", or "저녁"; condition (string, optional) — filter by condition, e.g. "고혈압"
+- Returns: `{"items": [{"name": "혈압약", "condition": "고혈압", "dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후 30분", "duration_days": 30, "price": 150}]}`
+- Errors:
+  - unknown time_slot → `{"error": "Unknown time_slot '밤'. Valid: 아침, 점심, 저녁."}`
+  - unknown condition → `{"error": "Unknown condition '감기'. Valid: 고혈압, 당뇨병, 고지혈증, 골관절염, 골다공증, 불면증, 전립선비대증, 치매, 파킨슨병, 변비."}`
 - Example request: "저녁에 드셔야 하는 약이 뭐야?"
+
+## Tool: add_medication
+- File: src/tools/medication_tools.py
+- Purpose: Add a new medication the parent is currently taking, with its condition, dosage, prescription duration, and price. Only call after the user confirms.
+- Type: write
+- Parameters:
+  - name (string, required) — medication name, e.g. "오메가3"
+  - condition (string, required) — associated condition, e.g. "고지혈증"
+  - dose_per_time (integer, required) — units per dose, must be ≥ 1
+  - times (array of string, required) — one or more of "아침", "점심", "저녁"
+  - instructions (string, required) — e.g. "식후 30분"
+  - duration_days (integer, required) — typical prescription length in days, must be ≥ 1
+  - price (integer, required) — price per unit in KRW, must be ≥ 0
+  - initial_stock (integer, optional, default 0) — units currently on hand
+- Returns: `{"name": "오메가3", "condition": "고지혈증", "quantity": 30}`
+- Errors:
+  - already exists → `{"error": "Medication '혈압약' already exists. Call refill_medication to add stock, or check_medication_stock to see quantity."}`
+  - unknown condition → `{"error": "Unknown condition '감기'. Valid: 고혈압, 당뇨병, 고지혈증, 골관절염, 골다공증, 불면증, 전립선비대증, 치매, 파킨슨병, 변비."}`
+  - invalid times → `{"error": "times must be one or more of 아침, 점심, 저녁."}`
+  - dose_per_time / duration_days < 1 → `{"error": "dose_per_time must be at least 1."}`
+  - price < 0 → `{"error": "price must be 0 or more."}`
+- Example request: "오메가3 새로 추가해줘. 고지혈증약이고 아침에 1정, 식후 30분, 30일치, 정당 200원, 지금 30개 있어."
 
 ## Tool: check_medication_stock
 - File: src/tools/stock_tools.py

@@ -39,6 +39,6 @@ return "Sorry, I could not finish this request."
 Everything in this list costs tokens and affects the agent's decisions. Keep it clean.
 
 ## Data files
-- `data/medications.json` — `{"혈압약": {"dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후 30분"}, ...}`
+- `data/medications.json` — `{"혈압약": {"condition": "고혈압", "dose_per_time": 1, "times": ["아침", "저녁"], "instructions": "식후 30분", "duration_days": 30, "price": 150}, ...}` (price in KRW per unit)
 - `data/stock.json` — `{"혈압약": 14, ...}` (남은 알약 개수)
 - `data/doses.json` — `{"date": "YYYY-MM-DD", "records": [{"medication": "혈압약", "time_slot": "저녁", "taken": true}]}`

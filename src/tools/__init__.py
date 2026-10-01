@@ -14,7 +14,12 @@ from src.tools.dose_tools import (
     get_dose_report,
     record_dose,
 )
-from src.tools.medication_tools import GET_MEDICATIONS_SCHEMA, get_medications
+from src.tools.medication_tools import (
+    ADD_MEDICATION_SCHEMA,
+    GET_MEDICATIONS_SCHEMA,
+    add_medication,
+    get_medications,
+)
 from src.tools.stock_tools import (
     CHECK_MEDICATION_STOCK_SCHEMA,
     REFILL_MEDICATION_SCHEMA,
@@ -25,6 +30,7 @@ from src.tools.stock_tools import (
 TOOL_SCHEMAS = [
     CALCULATE_SCHEMA,
     GET_MEDICATIONS_SCHEMA,
+    ADD_MEDICATION_SCHEMA,
     CHECK_MEDICATION_STOCK_SCHEMA,
     RECORD_DOSE_SCHEMA,
     GET_DOSE_REPORT_SCHEMA,
@@ -35,6 +41,7 @@ TOOL_SCHEMAS = [
 TOOL_FUNCTIONS = {
     "calculate": calculate,
     "get_medications": get_medications,
+    "add_medication": add_medication,
     "check_medication_stock": check_medication_stock,
     "record_dose": record_dose,
     "get_dose_report": get_dose_report,

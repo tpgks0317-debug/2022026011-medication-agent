@@ -39,6 +39,55 @@ def test_get_medications_bad_time_slot():
     assert "error" in get_medications("밤")
 
 
+def test_get_medications_condition():
+    from src.tools.medication_tools import get_medications
+    items = get_medications(condition="고혈압")["items"]
+    assert {i["name"] for i in items} == {"혈압약"}
+    assert items[0]["duration_days"] == 30 and items[0]["price"] == 150
+
+
+def test_get_medications_bad_condition():
+    from src.tools.medication_tools import get_medications
+    assert "error" in get_medications(condition="감기")
+
+
+# ---- add_medication ----
+def test_add_medication_ok():
+    from src.tools.medication_tools import add_medication
+    r = add_medication(
+        name="오메가3", condition="고지혈증", dose_per_time=1, times=["아침"],
+        instructions="식후", duration_days=30, price=200, initial_stock=30,
+    )
+    assert r == {"name": "오메가3", "condition": "고지혈증", "quantity": 30}
+
+
+def test_add_medication_already_exists():
+    from src.tools.medication_tools import add_medication
+    r = add_medication(
+        name="혈압약", condition="고혈압", dose_per_time=1, times=["아침"],
+        instructions="식후", duration_days=30, price=150,
+    )
+    assert "error" in r
+
+
+def test_add_medication_bad_condition():
+    from src.tools.medication_tools import add_medication
+    r = add_medication(
+        name="새약", condition="감기", dose_per_time=1, times=["아침"],
+        instructions="식후", duration_days=30, price=100,
+    )
+    assert "error" in r
+
+
+def test_add_medication_bad_times():
+    from src.tools.medication_tools import add_medication
+    r = add_medication(
+        name="새약", condition="고혈압", dose_per_time=1, times=["밤"],
+        instructions="식후", duration_days=30, price=100,
+    )
+    assert "error" in r
+
+
 # ---- check_medication_stock ----
 def test_check_medication_stock_ok():
     from src.tools.stock_tools import check_medication_stock
@@ -132,4 +181,4 @@ def test_registry_consistent():
     from src.tools import TOOL_FUNCTIONS, TOOL_SCHEMAS
     names = {s["function"]["name"] for s in TOOL_SCHEMAS}
     assert names == set(TOOL_FUNCTIONS)
-    assert len(names) >= 6
+    assert len(names) >= 7
